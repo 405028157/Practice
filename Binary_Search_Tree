@@ -55,7 +55,7 @@ TreeNode *CreateTree(int A[], int n)
 int main()
 {
     int A[] = {8,6,5,7,10,8,11};
-    CreateTree(A,7);
+    TreeNode *tree = CreateTree(A,7);
     
     system("pause");
     return 0;
