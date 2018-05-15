@@ -32,7 +32,8 @@ void MergeSort(int A[], int left, int right)
 	if(left >= right)
 		return;
 	int mid = (left + right) / 2;
-	/*应该左边取mid,右边mid+1; 因为mid是截断小数位而不是进位
+	/*
+	**应该左边取mid,右边mid+1; 因为mid是截断小数位而不是进位
 	**例left = 3, right = 4, mid = (3 + 4) / 2 = 3; 
 	**MergeSort(A,3,3);
 	**MergeSort(A,4,4);
