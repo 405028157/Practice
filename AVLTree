@@ -3,11 +3,11 @@
 using namespace std;
 
 struct AVLTree{
-    int data;
-    int height;
+    int Data;
+    int Height;
     AVLTree *left;
     AVLTree *right;
-}
+};
 
 int GetHeight(AVLTree *T)
 {
@@ -44,34 +44,43 @@ AVLTree *DoubleLeftRightRotation(AVLTree *A)
     return SingleLeftRotation(A);
 }
 
-AVLTree *Insert(AVLTree *T, int x)
+AVLTree *Insert(AVLTree *T, int X)
 {
     if(T == NULL){
         T = new AVLTree;
-        T-> height = 0;
-        T->data = X;
+        T-> Height = 0;
+        T->Data = X;
         T->left = T->right = NULL;
     }
-    else if(X < T->left){
-        T->left = Insert(T->left, x);
+    else if(X < T->Data){
+        T->left = Insert(T->left, X);
         /*如果需要左旋*/
         if(GetHeight(T->left) - GetHeight(T->right) == 2){
-            if(X < T->left->data)
+            if(X < T->left->Data)
                 T = SingleLeftRotation(T);
             else
                 T = DoubleLeftRightRotation(T);
         }
     }else{
-        T->right = Insert(T->right, x);
+        T->right = Insert(T->right, X);
         /*如果需要右旋*/
         if(GetHeight(T->right) - GetHeight(T->left) == 2){
-            if(x > T->right->data)
+            if(X > T->right->Data)
                 T = SingleRightRotation(T);
-            else(x < T->right->data)
+            else
                 T = DoubleLeftRightRotation(T);
         }
     }
     
     T->Height = max(GetHeight(T->left), GetHeight(T->right)) + 1;
     return T;
+}
+
+AVLTree *CreateAVLTree(int A[], int n)
+{
+    AVLTree *T = new AVLTree;
+}
+int main()
+{
+    
 }
