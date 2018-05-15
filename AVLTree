@@ -1,0 +1,77 @@
+#include<iostream>
+#include<algorithm>
+using namespace std;
+
+struct AVLTree{
+    int data;
+    int height;
+    AVLTree *left;
+    AVLTree *right;
+}
+
+int GetHeight(AVLTree *T)
+{
+    if(T == NULL) 
+        return 0;   /* 空树高度为0 */
+    return max(GetHeight(T->left), GetHeight(T->right)) + 1;
+}
+
+AVLTree *SingleLeftRotation(AVLTree *A)
+{
+    AVLTree *B = A->left;
+    A->left = B->right;
+    B->right = A;
+    A->Height = max(GetHeight(A->left), GetHeight(A->right)) + 1;
+    B->Height = max(GetHeight(B->left), GetHeight(B->right)) + 1;
+    
+    return B;
+}
+
+AVLTree *SingleRightRotation(AVLTree *A)
+{
+    AVLTree *B = A->right;
+    A->right = B->left;
+    B->left = A;
+    A->Height = max(GetHeight(A->left),GetHeight(A->right)) + 1;
+    B->Height = max(GetHeight(B->left), GetHeight(B->right)) + 1;
+    
+    return B;
+}
+
+AVLTree *DoubleLeftRightRotation(AVLTree *A)
+{
+    A->left = SingleRightRotation(A->left);
+    return SingleLeftRotation(A);
+}
+
+AVLTree *Insert(AVLTree *T, int x)
+{
+    if(T == NULL){
+        T = new AVLTree;
+        T-> height = 0;
+        T->data = X;
+        T->left = T->right = NULL;
+    }
+    else if(X < T->left){
+        T->left = Insert(T->left, x);
+        /*如果需要左旋*/
+        if(GetHeight(T->left) - GetHeight(T->right) == 2){
+            if(X < T->left->data)
+                T = SingleLeftRotation(T);
+            else
+                T = DoubleLeftRightRotation(T);
+        }
+    }else{
+        T->right = Insert(T->right, x);
+        /*如果需要右旋*/
+        if(GetHeight(T->right) - GetHeight(T->left) == 2){
+            if(x > T->right->data)
+                T = SingleRightRotation(T);
+            else(x < T->right->data)
+                T = DoubleLeftRightRotation(T);
+        }
+    }
+    
+    T->Height = max(GetHeight(T->left), GetHeight(T->right)) + 1;
+    return T;
+}
