@@ -60,7 +60,7 @@ int main()
             Node[NodeIndex].child.push_back(child);
         }
         
-        sort(Node[NodeIndex].child.begin(), Node[NodeIndex].child.end(), cmp);
+        sort(Node[NodeIndex].child.begin(), Node[NodeIndex].child.end(), Compare);
     }
     
     path[0] = 0;
