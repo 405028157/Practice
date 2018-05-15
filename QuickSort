@@ -16,7 +16,7 @@ int Partition(int A[], int left, int right)
 
 void QuickSort(int A[], int left, int right)
 {
-	if(left > right)
+	if(left >= right)
 		return;
 	int Position = Partition(A, left, right);
 	QuickSort(A,left,Position-1);
