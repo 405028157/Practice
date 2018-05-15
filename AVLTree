@@ -44,6 +44,12 @@ AVLTree *DoubleLeftRightRotation(AVLTree *A)
     return SingleLeftRotation(A);
 }
 
+AVLTree *DoubleRightLeftRotation(AVLTree *A)
+{
+    A->right = SingleLeftRotation(A->right);
+    return SingleRightRotation(A);
+}
+
 AVLTree *Insert(AVLTree *T, int X)
 {
     if(T == NULL){
@@ -61,16 +67,16 @@ AVLTree *Insert(AVLTree *T, int X)
             else
                 T = DoubleLeftRightRotation(T);
         }
-    }else{
+    }else if(X > T->Data){
         T->right = Insert(T->right, X);
         /*如果需要右旋*/
         if(GetHeight(T->right) - GetHeight(T->left) == 2){
             if(X > T->right->Data)
                 T = SingleRightRotation(T);
             else
-                T = DoubleLeftRightRotation(T);
+                T = DoubleRightLeftRotation(T);
         }
-    }
+    }/*else if(X == T->Data) 什么也不做*/
     
     T->Height = max(GetHeight(T->left), GetHeight(T->right)) + 1;
     return T;
@@ -82,6 +88,8 @@ AVLTree *CreateAVLTree(int A[], int N)
     for(int i = 0; i < N; i++){
         T = Insert(T, A[i]);  /* 每次插入都要T = ... ， 因为根节点可能会变 */
     }
+    
+    return T;
 }
 int main()
 {
