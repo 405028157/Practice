@@ -1,0 +1,56 @@
+#include<iostream>
+#define maxn 1000
+using namespace std;
+
+int temp[maxn];
+int A[] = {5,3,4,7,5,9,1};
+
+/*把[L1, R2]这一段排列为有序, 当前[L1,R1], [L2,R2]为升序*/
+/*用到two pointers，时间复杂度O(n)*/
+void merge(int A[], int L1, int R1, int L2, int R2)   
+{
+	int i = L1, j = L2;
+	int index = 0;
+	while(i <= R1 && j <= R2){
+		if(A[i] <= A[j]){
+			temp[index++] = A[i++];
+		}else{
+			temp[index++] = A[j++];
+		}
+	}
+	
+	while(i <= R1) temp[index++] = A[i++];
+	while(j <= R2) temp[index++] = A[j++];
+}
+
+/*将[left, right]这一段排列为有序，当前序列无序*/
+void MergeSort(int A[], int left, int right)
+{
+	if(left >= right)
+		return;
+	int mid = (left + right) / 2;
+	/*应该左边取mid,右边mid+1; 因为mid是截断小数位而不是进位
+	**例left = 3, right = 4, mid = (3 + 4) / 2 = 3; 
+	**MergeSort(A,3,3);
+	**MergeSort(A,4,4);
+	**若是左边取mid-1,右边取mid;那么mid可能一直“够不到”right
+	**MergeSort(A,3,2);
+	**MergeSort(A,3,4); 无法结束
+	*/
+	MergeSort(A, left, mid); 
+	MergeSort(A, mid+1, right); 
+	merge(A,left,mid,mid+1,right);
+}
+
+int main()
+{
+	MergeSort(A,0,6);
+	for(int i = 0; i < 7; i++){
+		printf("%d", A[i]);
+		if(i != 6)
+			putchar(' ');
+	}
+	
+	system("pause");
+	return 0;
+}
