@@ -1,0 +1,71 @@
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#define maxn 110
+using namespace std;
+
+int path[maxn]; //存放结果的路径
+int N, M, S;
+struct{
+    int weight;
+    vector<int> child;
+}Node[maxn];
+
+/*a,b是Node的下标,即结点编号*/
+bool Compare(int a, int b)
+{
+    return Node[a].weight > Node[b].weight;
+}
+
+/*
+**@index: 当前结点的序号
+**@SumWeight: 当前的权值
+**@num: 经过的结点数量
+*/
+void dfs(int num, int SumWeight, int index)
+{
+    if(SumWeight > S) return;
+    if(SumWeight == S){
+        if(!Node[index].child.empty()) //还没到叶子结点，直接返回
+            return;
+        //到达叶子结点，此时Path[]中存放了一条完整的路径，输出它
+        for(int i = 0; i < num; i++){
+            printf("%d", Node[path[i]].weight);
+            if(i != num - 1) printf(" ");
+            else printf("\n");
+        }
+        
+        return; //无论是否成功输出，都要return
+    }
+    
+    for(int i = 0; i < Node[index].child.size(); i++){
+        child = Node[index].child[i];
+        path[num] = child; //注意此处是将儿子(将要dfs的对象)加到结果路径，数学建模的时候是将父亲（当前dfs的对象）加到结果路径，吃了亏
+        dfs(num+1,SumWeight+Node[child].weight,child);
+    }
+}
+
+int main()
+{
+    scanf("%d%d%d", &N, &M, &S);
+    for(int i = 0; i < N; i++){
+        scanf("%d", &Node[i].weight);
+    }
+    
+    int NodeIndex, k, child;
+    for(int i = 0; i < M; i++){
+        scanf("%d%d", &NodeIndex, &k);  //结点编号、孩子个数
+        for(int j = 0; j < k; j++){
+            scanf("%d", &child);
+            Node[NodeIndex].child.push_back(child);
+        }
+        
+        sort(Node[NodeIndex].child.begin(), Node[NodeIndex].child.end(), cmp);
+    }
+    
+    path[0] = 0;
+    dfs(1, Node[0].weight, 0);
+    
+    system("pause");
+    return 0;
+}
