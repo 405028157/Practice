@@ -1,0 +1,62 @@
+#include<iostream>
+using namespace std;
+
+struct TreeNode{
+    int data;
+    Node *left, *right;
+};
+
+TreeNode *NewNode(int x)
+{
+    TreeNode *node = new TreeNode;
+    node->data = x;
+    node->left = node->right = x;
+    return node;
+}
+
+void Search(TreeNode *root, int x)
+{
+    if(root->data == x){
+        printf("%d\n", x);
+        return;
+    }
+    
+    if(x < root->data){
+        Search(root->left, x);
+    }else{
+        Search(root->right, x);
+    }
+}
+
+void Insert(TreeNode *&root, int x)
+{
+    if(root == NULL){
+        root = NewNode(x);
+        return;
+    }
+    
+    if(x < root->data)
+        Insert(root->left, x);
+    else
+        Insert(root->right, x);
+}
+
+/*用数组A中的值创建二叉搜索树*/
+TreeNode *CreateTree(int A[], int n)
+{
+    TreeNode *root;
+    for(int i = 0; i < n; i++){
+        Insert(root, A[i]);
+    }
+    
+    return root;
+}
+
+int main()
+{
+    int A[] = {8,6,5,7,10,8,11};
+    CreateTree(A,7);
+    
+    system("pause");
+    return 0;
+}
