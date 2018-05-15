@@ -39,7 +39,7 @@ void dfs(int num, int SumWeight, int index)
     }
     
     for(int i = 0; i < Node[index].child.size(); i++){
-        child = Node[index].child[i];
+        int child = Node[index].child[i];
         path[num] = child; //注意此处是将儿子(将要dfs的对象)加到结果路径，数学建模的时候是将父亲（当前dfs的对象）加到结果路径，吃了亏
         dfs(num+1,SumWeight+Node[child].weight,child);
     }
