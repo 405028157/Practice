@@ -3,14 +3,14 @@ using namespace std;
 
 struct TreeNode{
     int data;
-    Node *left, *right;
+    TreeNode *left, *right;
 };
 
 TreeNode *NewNode(int x)
 {
     TreeNode *node = new TreeNode;
     node->data = x;
-    node->left = node->right = x;
+    node->left = node->right = NULL;
     return node;
 }
 
@@ -44,7 +44,7 @@ void Insert(TreeNode *&root, int x)
 /*用数组A中的值创建二叉搜索树*/
 TreeNode *CreateTree(int A[], int n)
 {
-    TreeNode *root;
+    TreeNode *root = NULL;
     for(int i = 0; i < n; i++){
         Insert(root, A[i]);
     }
