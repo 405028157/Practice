@@ -52,6 +52,24 @@ TreeNode *CreateTree(int A[], int n)
     return root;
 }
 
+void PreOrder(TreeNode *root)
+{
+    if(root == NULL)
+        return;
+    printf("%d ", root->data);
+    PreOrder(root->left);
+    PreOrder(root->right);
+}
+
+void InOrder(TreeNode *root)
+{
+    if(root == NULL)
+        return;
+    InOrder(root->left);
+    printf("%d ", root->data);
+    InOrder(root->right);
+}
+
 int main()
 {
     int A[] = {8,6,5,7,10,8,11};
