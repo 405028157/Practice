@@ -21,6 +21,9 @@ void merge(int A[], int L1, int R1, int L2, int R2)
 	
 	while(i <= R1) temp[index++] = A[i++];
 	while(j <= R2) temp[index++] = A[j++];
+	
+	for(i = 0; i < index; i++)
+        A[L1 + i] = temp[i];
 }
 
 /*将[left, right]这一段排列为有序，当前序列无序*/
