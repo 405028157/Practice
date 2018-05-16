@@ -1,0 +1,36 @@
+#include<iostream>
+using namespace std;
+
+int FindFather(int x)
+{
+    while(x != father[x]){
+        x = father[x];
+    }
+    
+    return x;
+}
+
+void Union(int a, int b)
+{
+    int FaA = FindFather(a);
+    int FaB = FindFather(b);
+    if(FaA != FaB)
+        FaA[father] = FaB;
+}
+
+/* 考虑路径压缩 */
+int FindFather(int x)
+{
+    int a = x;
+    while(x != father[x]){
+        x = father[x];
+    }
+    
+    while(a != father[a]){
+        int temp = a;
+        a = father[a];
+        father[temp] = x;
+    }
+    
+    return x;
+}
