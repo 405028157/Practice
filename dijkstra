@@ -28,7 +28,7 @@ void dijkstra(int s)
     if(u == -1) return;
     vis[u] = true;
     for(int v = 0; v < n; v++){
-      if(G[u][v] != INF){
+      if(G[u][v] != INF){      //算法笔记p383还有vis[v] == false;这一条件，不太理解
         if(d[u] + G[u][v] < d[v]){
           d[v] = d[u] + G[u][v];
           pre[v].clear();
