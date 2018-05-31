@@ -15,7 +15,7 @@ int Partition(int A[], int left, int right)
   return left;
 }
 
-void quickSort(int A[], int &n, int left, int right)
+void quickSort(int A[], int left, int right)
 {
   if(left >= right) return;
   int div;
