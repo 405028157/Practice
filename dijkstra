@@ -11,7 +11,7 @@ int n, m, st, ed; //n为起点数，m为边数，st为起点，ed为终点
 vector<int> pre[MAXV];
 bool vis[MAXV] = {false};
 
-void dijkstra(int s)
+void dijkstra(int s) //实参为st
 {
   fill(d, d+MAXV, INF);
   d[s] = 0;
@@ -28,7 +28,7 @@ void dijkstra(int s)
     if(u == -1) return;
     vis[u] = true;
     for(int v = 0; v < n; v++){
-      if(G[u][v] != INF){      //算法笔记p383还有vis[v] == false;这一条件，不太理解
+      if(G[u][v] != INF){      //算法笔记p383还有vis[v] == false这一条件，不太理解
         if(d[u] + G[u][v] < d[v]){
           d[v] = d[u] + G[u][v];
           pre[v].clear();
@@ -41,5 +41,27 @@ void dijkstra(int s)
   }
 }
 
-
+int optvalue; //第二标尺最优值
+vector<int> path, tempPath; //最优路径、临时路径
+void DFS(int v) //v是当前访问结点
+{
+  //递归边界
+  if(v == st){ //如果到了叶子结点st(路径的起点)
+    tempPath.pushback(v);
+    int value;
+    计算路径tempPath上的value值;
+    if(value优于optvalue){
+      optvalue = value;
+      path = tempPath; //vector<int>类型的变量，重载了=运算符
+    }
+    tempPath.pop_back();
+    return;
+  }
+  
+  tempPath.push_back(v);
+  for(int i = 0; i < pre[v].size(); i++){
+    DFS(pre[v][i]);
+  }
+  tempPath.pop_back();
+}
 
