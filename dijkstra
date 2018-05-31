@@ -1,0 +1,39 @@
+#include<vector>
+#include<iostream>
+using namespace std;
+
+const int MAXV = 510; //最大顶点数
+const int INF = 1000000000;
+
+int G[MAXV][MAXV]; //邻接矩阵
+int d[MAXV];
+vector<int> pre[max];
+void Dijkstra(int s) //s是起点
+{
+  fill(d, d+MAXV, INF);
+  d[s] = 0;
+  for(int i = 0; i < n; i++){
+    int u = -1, MIN = INF;  //找到最小的d[u]
+    for(int j = 0; j < n; j++){
+      if(vis[i] == false && d[j] < MIN){
+        u = j;
+        MIN = d[j];
+      }
+      
+      if(u == -1) return;
+      vis[u] = true;
+      for(int v = 0; v < n; v++){
+        if(vis[v] == false && G[u][v] != INF){
+          if(d[u] + G[u][v] < d[v]){
+            d[v] = d[u] + G[u][v]; //优化d[v]
+            pre[v].clear(); //清空pre[v]
+            pre[v].push_back(u); //令u的前驱为u
+          }else if(d[u] + G[u][v] == d[v]){
+            pre[v].push_back(u); //令u的前驱为u
+          }
+        }
+      }
+    }
+  }
+  
+}
