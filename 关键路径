@@ -42,3 +42,38 @@ bool topologicalSort()
   if(topOrder.size() == n) return true;
   else return false;
 }
+
+int CriticalPath()
+{
+  memset(ve, 0, sizeof(ve));
+  if(topologicalSort() == false){
+    return -1;
+  }
+  
+  fill(vl, vl+n, ve[n-1]);
+  
+  while(!topOrder.empty()){
+    int u = topOrder.top();
+    topOrder.pop();
+    for(int i = 0; i < G[u].size(); i++){
+      int v = G[u][v].v;
+      //用所有u的后继结点v的vl值来更新vl[u]
+      if(vl[v] - G[u][i].w < vl[u]){
+        vl[u] = vl[v] - G[u][i].w;
+      }
+    }
+  }
+  
+  //遍历邻接表的所有边，计算活动的最早开始时间e和最迟开始时间l
+  for(int u = 0; u < n; u++){
+    for(int i = 0; i < G[u].size(); i++){
+      int v = G[u][i].v, w = G[u][i].w;
+      //活动的最早开始时间e和最迟开始时间l
+      int e = ve[u], l = vl[v] - w;
+      if(e == l)
+        printf("%d->%d\n", u, v);
+    }
+  }
+  
+  return ve[n-1];  //返回关键路径长度
+}
