@@ -1,0 +1,41 @@
+#include<iostream>
+#include<vector>
+using namespace std;
+
+struct Node{
+  int v, dis;
+}
+
+const int MAXV = 1000000000;
+int G[MAXV][MAXV];
+int d[MAXV];
+int vis[MAXV] = {false;}
+int n, m, st, ed;
+
+int prim(int s)  //s可以任意指定
+{
+  fill(d, d + MAXV, INF);
+  d[st] = 0;
+  int ans = 0;
+  
+  for(int i = 0; i < n; i++){
+    int u = -1, MIN = INF;
+    for(int j = 0; j < n; j++){
+      if(vis[j] == false && d[j] < MIN){
+        MIN = d[j];
+        u = j;
+      }
+    }
+    
+    if( u == -1) return;
+    vis[u] = true;
+    ans += d[u];
+    for(int v = 0; v < n; v++){
+      if(vis[v] == false && G[u][v] != INF && G[u][v] < d[v]){
+        d[v] = G[u][v];
+      }
+    }
+  }
+  
+  return ans;
+}
