@@ -3,3 +3,55 @@
 using namespace std;
 
 const int MAXV = 110;
+const int MAXE = 10010;
+
+struct edge{
+  int u, v;
+  int cost;
+}E[MAXE];
+
+bool cmp(edge a, edge b)
+{
+  return a.cost < b.cost;
+}
+
+int father[MAXV];
+int findFather(int x)
+{
+  int a = x;
+  while(x != father[x]){
+    x = father[x];
+  }
+  
+  while(a != father[a]){
+    int z = a;
+    a = father[a];
+    father[z] = x;
+  }
+  
+  return x;
+}
+
+//n为顶点个数，m为图的边数
+int kruskal(int n, int m)
+{
+  int ans = 0, Num_Edge = 0;
+  for(int i = 0; i < n; i++){
+    father[i] = i;
+  }
+  
+  sort(E, E+m, cmp);
+  for(int i = 0; i < m; i++){
+    int faU = findFather(E[i].u);
+    int faV = findFather(E[i].v);
+    if(faU != faV){
+      father[faU] = faV; //合并集合
+      ans += E[i].cost; //增加边权
+      Num_Edge++; //当前生成树的边数加1
+      if(Num_Edge == n - 1) break; //边数等于定点数减1时退出
+    }
+  }
+  
+  if(Num_Edge != n - 1) return -1;
+  else return ans;
+}
