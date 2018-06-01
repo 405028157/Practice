@@ -8,6 +8,7 @@ struct Node{
 
 const int MAXV = 1000000000;
 int G[MAXV][MAXV];
+//vector<Node> adj[MAXV];
 int d[MAXV];
 int vis[MAXV] = {false;}
 int n, m, st, ed;
