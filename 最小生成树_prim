@@ -6,7 +6,8 @@ struct Node{
   int v, dis;
 }
 
-const int MAXV = 1000000000;
+const int INF = 1000000000;
+const int MAXV = 510;
 int G[MAXV][MAXV];
 //vector<Node> adj[MAXV];
 int d[MAXV];
